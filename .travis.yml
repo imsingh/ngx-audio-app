@@ -1,0 +1,28 @@
+sudo: false
+language: node_js
+cache:
+  directories:
+    - node_modules
+install:
+  - npm i --silent --no-optional -g @angular/cli
+  - npm i --silent --no-optional -g angular-cli-ghpages
+script:
+  - npm install
+  - ng build --prod --base-href "https://imsingh.github.io/ngx-audio-app/"
+  - ngh --no-silent --repo=https://GH_TOKEN@github.com/imsingh/ngx-audio-app.git --name="imsingh" --email=indermohansinghk7@gmail.com
+    
+notifications:
+  email: false
+node_js:
+  - 9.2.0
+before_install:
+  - export CHROME_BIN=chromium-browser
+  - npm i -g npm@^3
+before_script:
+  - npm prune
+branches:
+  except:
+    - "/^v\\d+\\.\\d+\\.\\d+$/"
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
